@@ -5,10 +5,7 @@ import com.example.cnspring6restmvc.services.BeerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,16 +13,16 @@ import java.util.UUID;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v1/")
 public class BeerController {
     private final BeerService beerService;
 
-    @RequestMapping("/api/v1/beer")
+    @GetMapping("beers")
     public List<Beer> listBeers(){
         return beerService.listBeers();
     }
-    @RequestMapping(value = "{beerId}", method = RequestMethod.GET)
-    public Beer getBeerById(@PathVariable("beerId") UUID id){
+    @GetMapping("beers/id")
+    public Beer getBeerById(@PathVariable("id") UUID id){
         log.info("Get Beer by Id - In Controller");
         return beerService.getBeerById(id);
     }
