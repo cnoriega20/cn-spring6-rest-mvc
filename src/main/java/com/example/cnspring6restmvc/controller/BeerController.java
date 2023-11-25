@@ -13,15 +13,15 @@ import java.util.UUID;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/beers")
 public class BeerController {
     private final BeerService beerService;
 
-    @GetMapping("beers")
+    @GetMapping()
     public List<Beer> listBeers(){
         return beerService.listBeers();
     }
-    @GetMapping("beers/id")
+    @GetMapping("{id}")
     public Beer getBeerById(@PathVariable("id") UUID id){
         log.info("Get Beer by Id - In Controller");
         return beerService.getBeerById(id);
