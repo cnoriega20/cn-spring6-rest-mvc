@@ -16,19 +16,10 @@ import java.util.UUID;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/customers")
+@RequestMapping("/api/v1/customer")
 public class CustomerController {
     private final CustomerService customerService;
 
-    @PostMapping
-    public ResponseEntity handlePost(@RequestBody Customer beer) {
-        Customer savedCustomer = customerService.saveCustomer(beer);
-
-        //Response headers
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Location", "/api/v1/customer/" + savedCustomer.getId().toString());
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
-    }
     @GetMapping()
     public List<Customer> listCustomers(){
         return customerService.listCustomers();
@@ -39,4 +30,21 @@ public class CustomerController {
         log.info("Get Customer by Id - In Customer Controller");
         return customerService.getCustomerById(id);
     }
+    @PostMapping
+    public ResponseEntity handlePost(@RequestBody Customer beer) {
+        Customer savedCustomer = customerService.saveCustomer(beer);
+
+        //Response headers
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Location", "/api/v1/customer/" + savedCustomer.getId().toString());
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+    }
+
+    @PutMapping("{customerId}")
+    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId,
+                                             @RequestBody Customer customer) {
+        customerService.updateCustomerById(customerId, customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
 }
