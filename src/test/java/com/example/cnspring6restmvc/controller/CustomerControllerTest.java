@@ -1,8 +1,10 @@
 package com.example.cnspring6restmvc.controller;
 
+import com.example.cnspring6restmvc.model.Customer;
 import com.example.cnspring6restmvc.services.CustomerService;
 import com.example.cnspring6restmvc.services.CustomerServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.hamcrest.Matchers;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,6 +48,18 @@ class CustomerControllerTest {
     }
 
     @Test
-    void getCustomerByIdTest() {
+    void getCustomerByIdTest() throws Exception{
+        Customer testCustomer = customerServiceImpl.listCustomers().get(0);
+
+        given(customerService.getCustomerById(testCustomer.getId())).willReturn(testCustomer);
+
+        mockMvc.perform(get("/api/v1/customer/" + testCustomer.getId())
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", Matchers.is(testCustomer.getId().toString())))
+                .andExpect(jsonPath("$.customerName", Matchers.is(testCustomer.getCustomerName())));
+
+
     }
 }
