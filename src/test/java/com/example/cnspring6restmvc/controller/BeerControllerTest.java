@@ -3,7 +3,6 @@ package com.example.cnspring6restmvc.controller;
 import com.example.cnspring6restmvc.model.Beer;
 import com.example.cnspring6restmvc.services.BeerService;
 import com.example.cnspring6restmvc.services.BeerServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,15 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.hamcrest.core.Is.is;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @WebMvcTest(BeerController.class)
 @Slf4j
