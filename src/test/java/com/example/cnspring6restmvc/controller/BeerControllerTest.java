@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,6 +24,8 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.core.Is.is;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @WebMvcTest(BeerController.class)
 @Slf4j
@@ -43,6 +46,18 @@ class BeerControllerTest {
         beerServiceImpl = new BeerServiceImpl();
     }
 
+    @Test
+    void deleteBeerTest() throws Exception{
+        Beer testBeer = beerServiceImpl.listBeers().get(0);
+
+        mockMvc.perform(delete("/api/v1/beer/" + testBeer.getId())
+                        .accept(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isNoContent());
+        ArgumentCaptor<UUID> uuidArgCaptor = ArgumentCaptor.forClass(UUID.class);
+        verify(beerService).deleteById(uuidArgCaptor.capture());
+
+        assertThat(testBeer.getId()).isEqualTo(uuidArgCaptor.getValue());
+    }
     @Test
     void updatedBeerTest() throws Exception {
         Beer testBeer = beerServiceImpl.listBeers().get(0);
