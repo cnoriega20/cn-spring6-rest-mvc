@@ -1,5 +1,6 @@
 package com.example.cnspring6restmvc.controller;
 
+import com.example.cnspring6restmvc.exception.NotFoundException;
 import com.example.cnspring6restmvc.model.Customer;
 import com.example.cnspring6restmvc.services.CustomerService;
 import com.example.cnspring6restmvc.services.CustomerServiceImpl;
@@ -9,9 +10,11 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -112,7 +115,12 @@ class CustomerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", Matchers.is(testCustomer.getId().toString())))
                 .andExpect(jsonPath("$.customerName", Matchers.is(testCustomer.getCustomerName())));
+    }
 
-
+    @Test
+    void getCustomerNotFoundException() throws Exception {
+        BDDMockito.given(customerService.getCustomerById(any(UUID.class))).willThrow(NotFoundException.class);
+        mockMvc.perform(get(CUSTOMER_PATH_ID, UUID.randomUUID()))
+                .andExpect(status().isNotFound());
     }
 }

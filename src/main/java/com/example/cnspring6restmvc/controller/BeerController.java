@@ -53,10 +53,4 @@ public class BeerController {
         beerService.deleteById(beerId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity handleNotFoundException() {
-        return ResponseEntity.notFound().build();
-    }
-
 }
