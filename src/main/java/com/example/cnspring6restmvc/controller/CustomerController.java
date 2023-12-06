@@ -1,5 +1,6 @@
 package com.example.cnspring6restmvc.controller;
 
+import com.example.cnspring6restmvc.exception.NotFoundException;
 import com.example.cnspring6restmvc.model.Beer;
 import com.example.cnspring6restmvc.model.Customer;
 import com.example.cnspring6restmvc.services.CustomerService;
@@ -31,7 +32,7 @@ public class CustomerController {
     @GetMapping(CUSTOMER_PATH_ID)
     public Customer getCustomerById(@PathVariable("customerId") UUID id) {
         log.info("Get Customer by Id - In Customer Controller");
-        return customerService.getCustomerById(id);
+        return customerService.getCustomerById(id).orElseThrow(NotFoundException::new);
     }
     @PostMapping(CUSTOMER_PATH)
     public ResponseEntity handlePost(@RequestBody Customer beer) {
