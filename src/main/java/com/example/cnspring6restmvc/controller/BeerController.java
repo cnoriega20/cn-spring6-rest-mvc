@@ -27,7 +27,7 @@ public class BeerController {
         return beerService.listBeers();
     }
     @GetMapping(BEER_PATH_ID)
-    public Beer getBeerById(@PathVariable("id") UUID id){
+    public Beer getBeerById(@PathVariable("beerId") UUID id){
         log.info("Get Beer by Id - In Beer Controller");
         return beerService.getBeerById(id);
     }

@@ -1,5 +1,6 @@
 package com.example.cnspring6restmvc.controller;
 
+import com.example.cnspring6restmvc.exception.NotFoundException;
 import com.example.cnspring6restmvc.model.Beer;
 import com.example.cnspring6restmvc.services.BeerService;
 import com.example.cnspring6restmvc.services.BeerServiceImpl;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.UUID;
 
 import static com.example.cnspring6restmvc.controller.BeerController.BEER_PATH;
+import static com.example.cnspring6restmvc.controller.BeerController.BEER_PATH_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -106,12 +109,22 @@ class BeerControllerTest {
         //given
         given(beerService.getBeerById(testBeer.getId())).willReturn(testBeer);
 
-        mockMvc.perform(get("/api/v1/beer/" + testBeer.getId())
+        mockMvc.perform(get(BEER_PATH + "/" + testBeer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id",is(testBeer.getId().toString())))
                 .andExpect(jsonPath("$.beerName", is(testBeer.getBeerName())));
+
+    }
+
+    @Test
+    void getBeerIdNotFoundException() throws Exception {
+
+        given(beerService.getBeerById(any(UUID.class))).willThrow(NotFoundException.class);
+
+        mockMvc.perform(get(BEER_PATH + "/" + UUID.randomUUID()))
+                .andExpect(status().isNotFound());
 
     }
 }

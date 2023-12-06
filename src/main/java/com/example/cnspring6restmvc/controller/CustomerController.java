@@ -29,7 +29,7 @@ public class CustomerController {
     }
 
     @GetMapping(CUSTOMER_PATH_ID)
-    public Customer getCustomerById(@PathVariable("id") UUID id) {
+    public Customer getCustomerById(@PathVariable("customerId") UUID id) {
         log.info("Get Customer by Id - In Customer Controller");
         return customerService.getCustomerById(id);
     }
