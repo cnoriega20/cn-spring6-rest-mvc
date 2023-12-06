@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.UUID;
 
 import static com.example.cnspring6restmvc.controller.CustomerController.CUSTOMER_PATH;
+import static com.example.cnspring6restmvc.controller.CustomerController.CUSTOMER_PATH_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,7 +52,7 @@ class CustomerControllerTest {
     void deleteCustomerTest() throws Exception {
         Customer testCustomer = customerServiceImpl.listCustomers().get(0);
 
-        mockMvc.perform(delete(CUSTOMER_PATH + "/" + testCustomer.getId())
+        mockMvc.perform(delete(CUSTOMER_PATH_ID, testCustomer.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
         ArgumentCaptor<UUID> uuidArgCaptor = ArgumentCaptor.forClass(UUID.class);
@@ -64,7 +65,7 @@ class CustomerControllerTest {
     void updatedCustomerTest() throws Exception {
         Customer testCustomer = customerServiceImpl.listCustomers().get(0);
 
-        mockMvc.perform(put(CUSTOMER_PATH + "/" + testCustomer.getId())
+        mockMvc.perform(put(CUSTOMER_PATH_ID, testCustomer.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(testCustomer)))
@@ -105,7 +106,7 @@ class CustomerControllerTest {
 
         given(customerService.getCustomerById(testCustomer.getId())).willReturn(testCustomer);
 
-        mockMvc.perform(get(CUSTOMER_PATH + "/" + testCustomer.getId())
+        mockMvc.perform(get(CUSTOMER_PATH_ID, testCustomer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))

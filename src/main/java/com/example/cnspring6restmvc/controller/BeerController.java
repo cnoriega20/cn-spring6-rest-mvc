@@ -1,5 +1,6 @@
 package com.example.cnspring6restmvc.controller;
 
+import com.example.cnspring6restmvc.exception.NotFoundException;
 import com.example.cnspring6restmvc.model.Beer;
 import com.example.cnspring6restmvc.services.BeerService;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,11 @@ public class BeerController {
     public ResponseEntity deleteById(@PathVariable("beerId") UUID beerId){
         beerService.deleteById(beerId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity handleNotFoundException() {
+        return ResponseEntity.notFound().build();
     }
 
 }

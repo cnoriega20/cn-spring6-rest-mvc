@@ -56,7 +56,7 @@ class BeerControllerTest {
     void deleteBeerTest() throws Exception{
         Beer testBeer = beerServiceImpl.listBeers().get(0);
 
-        mockMvc.perform(delete(BEER_PATH +  "/" + testBeer.getId())
+        mockMvc.perform(delete(BEER_PATH_ID, testBeer.getId())
                         .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isNoContent());
         //ArgumentCaptor<UUID> uuidArgCaptor = ArgumentCaptor.forClass(UUID.class);
@@ -69,7 +69,7 @@ class BeerControllerTest {
     void updatedBeerTest() throws Exception {
         Beer testBeer = beerServiceImpl.listBeers().get(0);
 
-        mockMvc.perform(put(BEER_PATH +  "/" + testBeer.getId())
+        mockMvc.perform(put(BEER_PATH_ID, testBeer.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(testBeer)))
@@ -109,7 +109,7 @@ class BeerControllerTest {
         //given
         given(beerService.getBeerById(testBeer.getId())).willReturn(testBeer);
 
-        mockMvc.perform(get(BEER_PATH + "/" + testBeer.getId())
+        mockMvc.perform(get(BEER_PATH_ID, testBeer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -123,7 +123,7 @@ class BeerControllerTest {
 
         given(beerService.getBeerById(any(UUID.class))).willThrow(NotFoundException.class);
 
-        mockMvc.perform(get(BEER_PATH + "/" + UUID.randomUUID()))
+        mockMvc.perform(get(BEER_PATH_ID, UUID.randomUUID()))
                 .andExpect(status().isNotFound());
 
     }
