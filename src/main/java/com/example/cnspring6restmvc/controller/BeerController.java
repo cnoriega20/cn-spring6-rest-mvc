@@ -1,14 +1,13 @@
 package com.example.cnspring6restmvc.controller;
 
 import com.example.cnspring6restmvc.exception.NotFoundException;
-import com.example.cnspring6restmvc.model.Beer;
+import com.example.cnspring6restmvc.model.BeerDTO;
 import com.example.cnspring6restmvc.services.BeerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,18 +23,18 @@ public class BeerController {
     private final BeerService beerService;
 
     @GetMapping(BEER_PATH)
-    public List<Beer> listBeers(){
+    public List<BeerDTO> listBeers(){
         return beerService.listBeers();
     }
     @GetMapping(BEER_PATH_ID)
-    public Beer getBeerById(@PathVariable("beerId") UUID id){
+    public BeerDTO getBeerById(@PathVariable("beerId") UUID id){
         log.info("Get Beer by Id - In Beer Controller");
         return beerService.getBeerById(id).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping(BEER_PATH)
-    public ResponseEntity handlePost(@RequestBody Beer beer) {
-        Beer savedBeer = beerService.saveNewBeer(beer);
+    public ResponseEntity handlePost(@RequestBody BeerDTO beer) {
+        BeerDTO savedBeer = beerService.saveNewBeer(beer);
         //Response headers
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/beer/" + savedBeer.getId().toString());
@@ -43,7 +42,7 @@ public class BeerController {
     }
 
     @PutMapping(BEER_PATH_ID)
-    public ResponseEntity updateById(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer){
+    public ResponseEntity updateById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDTO beer){
         beerService.updateBeerById(beerId, beer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

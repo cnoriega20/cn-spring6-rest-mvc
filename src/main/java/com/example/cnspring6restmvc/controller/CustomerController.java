@@ -1,8 +1,7 @@
 package com.example.cnspring6restmvc.controller;
 
 import com.example.cnspring6restmvc.exception.NotFoundException;
-import com.example.cnspring6restmvc.model.Beer;
-import com.example.cnspring6restmvc.model.Customer;
+import com.example.cnspring6restmvc.model.CustomerDTO;
 import com.example.cnspring6restmvc.services.CustomerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,18 +24,18 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping(CUSTOMER_PATH)
-    public List<Customer> listCustomers(){
+    public List<CustomerDTO> listCustomers(){
         return customerService.listCustomers();
     }
 
     @GetMapping(CUSTOMER_PATH_ID)
-    public Customer getCustomerById(@PathVariable("customerId") UUID id) {
+    public CustomerDTO getCustomerById(@PathVariable("customerId") UUID id) {
         log.info("Get Customer by Id - In Customer Controller");
         return customerService.getCustomerById(id).orElseThrow(NotFoundException::new);
     }
     @PostMapping(CUSTOMER_PATH)
-    public ResponseEntity handlePost(@RequestBody Customer beer) {
-        Customer savedCustomer = customerService.saveCustomer(beer);
+    public ResponseEntity handlePost(@RequestBody CustomerDTO beer) {
+        CustomerDTO savedCustomer = customerService.saveCustomer(beer);
 
         //Response headers
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -46,7 +45,7 @@ public class CustomerController {
 
     @PutMapping(CUSTOMER_PATH_ID)
     public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId,
-                                             @RequestBody Customer customer) {
+                                             @RequestBody CustomerDTO customer) {
         customerService.updateCustomerById(customerId, customer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
