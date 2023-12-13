@@ -1,10 +1,7 @@
 package com.example.cnspring6restmvc.entities;
 
 import com.example.cnspring6restmvc.model.BeerStyle;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -26,6 +23,8 @@ public class Beer {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
+
+    @Version
     private Integer version;
     private String beerName;
     private BeerStyle beerStyle;

@@ -1,9 +1,6 @@
 package com.example.cnspring6restmvc.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,6 +22,7 @@ public class Customer {
    @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
     private String customerName;
+    @Version
     private String version;
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;
