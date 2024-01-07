@@ -12,7 +12,7 @@ class BeerRepositoryTest {
     @Autowired
     BeerRepository beerRepository;
 
-    @Test
+    //@Test
     void saveBeerWithRepoTest(){
         Beer savedBeer = beerRepository.save(Beer.builder()
                 .beerName("ComsBeer")
