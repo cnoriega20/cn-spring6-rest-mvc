@@ -15,7 +15,7 @@ class CustomerRepositoryTest {
     @Autowired
     CustomerRepository customerRepository;
 
-    //@Test
+    @Test
     void testSaveCustomer() {
         Customer customer = customerRepository.save(Customer.builder()
                         .customerName("Cesar")
