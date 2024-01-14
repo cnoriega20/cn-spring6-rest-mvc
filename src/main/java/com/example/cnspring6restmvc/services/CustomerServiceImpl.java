@@ -18,14 +18,14 @@ public class CustomerServiceImpl implements CustomerService{
         CustomerDTO customer1 = CustomerDTO.builder()
                 .id(UUID.fromString("efa4211e-8060-4941-aa52-95986debbf9b"))
                 .customerName("DY")
-                .version("1.0")
+                .version(1L)
                 .createdDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
                 .build();
         CustomerDTO customer2 = CustomerDTO.builder()
                 .id(UUID.fromString("3b05b574-fb6e-4783-864e-dd956bc773d4"))
                 .customerName("Feid")
-                .version("1.0")
+                .version(1L)
                 .createdDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
                 .build();

@@ -25,7 +25,7 @@ public class Beer {
     private UUID id;
 
     @Version
-    private Integer version;
+    private Long version;
     private String beerName;
     private BeerStyle beerStyle;
     private String upc;

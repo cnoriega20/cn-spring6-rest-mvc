@@ -21,7 +21,7 @@ public class BeerServiceImpl implements BeerService{
 
         BeerDTO beer1 = BeerDTO.builder()
                 .id(UUID.randomUUID())
-                .version(1)
+                .version(1L)
                 .beerName("Galaxy Cat")
                 .beerStyle(BeerStyle.PALE_ALE)
                 .upc("12356")
@@ -33,7 +33,7 @@ public class BeerServiceImpl implements BeerService{
 
         BeerDTO beer2 = BeerDTO.builder()
                 .id(UUID.randomUUID())
-                .version(1)
+                .version(1L)
                 .beerName("Crank")
                 .beerStyle(BeerStyle.PALE_ALE)
                 .upc("12356222")
@@ -45,7 +45,7 @@ public class BeerServiceImpl implements BeerService{
 
         BeerDTO beer3 = BeerDTO.builder()
                 .id(UUID.randomUUID())
-                .version(1)
+                .version(1L)
                 .beerName("Sunshine City")
                 .beerStyle(BeerStyle.IPA)
                 .upc("12356")

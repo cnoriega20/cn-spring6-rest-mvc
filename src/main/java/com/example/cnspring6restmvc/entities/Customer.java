@@ -23,7 +23,7 @@ public class Customer {
     private UUID id;
     private String customerName;
     @Version
-    private String version;
+    private Long version;
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;
 }
