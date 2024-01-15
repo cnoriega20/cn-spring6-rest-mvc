@@ -47,7 +47,7 @@ class BeerControllerIT {
     @Rollback
     @Transactional
     @Test
-    void TestEmptyList(){
+    void estEmptyList(){
         beerRepository.deleteAll();
         List<BeerDTO> dtos = beerController.listBeers();
         Assertions.assertThat(dtos.size()).isEqualTo(0);
