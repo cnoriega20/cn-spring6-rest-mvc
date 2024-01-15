@@ -67,7 +67,7 @@ class BeerControllerTest {
     @Test
     void updatedBeerTest() throws Exception {
         BeerDTO testBeer = beerServiceImpl.listBeers().get(0);
-
+        given(beerService.updateBeerById(any(), any())).willReturn(Optional.of(testBeer));
         mockMvc.perform(put(BEER_PATH_ID, testBeer.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
