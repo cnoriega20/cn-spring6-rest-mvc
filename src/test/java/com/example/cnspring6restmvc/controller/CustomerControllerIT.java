@@ -58,6 +58,8 @@ class CustomerControllerIT {
         assertThat(dtos.size()).isEqualTo(0);
     }
 
+    @Rollback
+    @Transactional
     @Test
     void testSaveNewCustomer(){
         CustomerDTO customerDTO = CustomerDTO.builder()
