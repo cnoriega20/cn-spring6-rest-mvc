@@ -93,5 +93,12 @@ class CustomerControllerIT {
         Customer updatedCustomer = customerRepository.findById(customer.getId()).get();
         assertThat(updatedCustomer.getCustomerName()).isEqualTo(custName);
     }
+    @Test
+    void testDeleteCustomerByIdFound(){
+        Customer customer = customerRepository.findAll().get(0);
+        ResponseEntity responseEntity = customerController.deleteById(customer.getId());
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+        assertThat(customerRepository.findById(customer.getId())).isEmpty();
+    }
 
 }
