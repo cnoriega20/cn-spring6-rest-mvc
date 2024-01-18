@@ -101,4 +101,11 @@ class CustomerControllerIT {
         assertThat(customerRepository.findById(customer.getId())).isEmpty();
     }
 
+    @Test
+    void testDeleteCustomerByIdNotFound(){
+        assertThrows(NotFoundException.class, () -> {
+            customerController.deleteById(UUID.randomUUID());
+        });
+    }
+
 }
