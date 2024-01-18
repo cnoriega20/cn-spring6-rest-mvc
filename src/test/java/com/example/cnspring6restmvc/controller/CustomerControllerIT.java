@@ -74,7 +74,24 @@ class CustomerControllerIT {
 
         Customer customer = customerRepository.findById(savedCusUUID).get();
         assertThat(customer).isNotNull();
+    }
+    @Rollback
+    @Transactional
+    @Test
+    void updateExistingCustomer(){
+        Customer customer = customerRepository.findAll().get(0);
+        CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
+        customerDTO.setId(null);
+        customerDTO.setVersion(0l);
 
+        final String custName = "Cesar";
+        customerDTO.setCustomerName(custName);
+
+        ResponseEntity responseEntity = customerController.updateCustomerById(customer.getId(), customerDTO);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+
+        Customer updatedCustomer = customerRepository.findById(customer.getId()).get();
+        assertThat(updatedCustomer.getCustomerName()).isEqualTo(custName);
     }
 
 }

@@ -12,7 +12,7 @@ public interface CustomerService {
 
     CustomerDTO saveCustomer(CustomerDTO beer);
 
-    void updateCustomerById(UUID customerId, CustomerDTO customer);
+    Optional<CustomerDTO> updateCustomerById(UUID customerId, CustomerDTO customer);
 
     void deleteById(UUID customerId);
 }
