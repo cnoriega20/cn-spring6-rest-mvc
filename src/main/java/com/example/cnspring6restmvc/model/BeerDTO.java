@@ -19,7 +19,7 @@ public class BeerDTO {
     private Long version;
 
     @NotNull
-    @Not
+    @NotBlank
     private String beerName;
     private BeerStyle beerStyle;
     private String upc;
