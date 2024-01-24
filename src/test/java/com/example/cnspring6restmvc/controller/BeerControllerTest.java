@@ -1,5 +1,6 @@
 package com.example.cnspring6restmvc.controller;
 
+import com.example.cnspring6restmvc.entities.Beer;
 import com.example.cnspring6restmvc.model.BeerDTO;
 import com.example.cnspring6restmvc.services.BeerService;
 import com.example.cnspring6restmvc.services.BeerServiceImpl;
@@ -116,9 +117,7 @@ class BeerControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id",is(testBeer.getId().toString())))
                 .andExpect(jsonPath("$.beerName", is(testBeer.getBeerName())));
-
     }
-
     @Test
     void getBeerIdNotFoundException() throws Exception {
 
@@ -126,6 +125,19 @@ class BeerControllerTest {
 
         mockMvc.perform(get(BEER_PATH_ID, UUID.randomUUID()))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void createBeerTestWithNullBeerName() throws Exception {
+        BeerDTO beerDTO  = BeerDTO.builder().build();
+
+        given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
+
+        mockMvc.perform(post(BEER_PATH)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(beerDTO)))
+        .andExpect(status().isBadRequest());
 
     }
 }
