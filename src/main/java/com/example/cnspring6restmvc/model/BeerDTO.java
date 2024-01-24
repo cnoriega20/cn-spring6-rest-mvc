@@ -5,6 +5,8 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,6 +17,9 @@ import java.util.UUID;
 public class BeerDTO {
     private UUID id;
     private Long version;
+
+    @NotNull
+    @Not
     private String beerName;
     private BeerStyle beerStyle;
     private String upc;
