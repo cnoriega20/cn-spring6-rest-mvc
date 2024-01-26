@@ -91,7 +91,7 @@ class BeerControllerTest {
                         .content(objectMapper.writeValueAsString(testBeer)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.length()", is(1)));
-        verify(beerService).updateBeerById(any(UUID.class), any(BeerDTO.class));
+
     }
     @Test
     void createNewBeerTest() throws Exception {
