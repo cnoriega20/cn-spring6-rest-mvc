@@ -4,6 +4,7 @@ import com.example.cnspring6restmvc.model.BeerDTO;
 import com.example.cnspring6restmvc.model.BeerStyle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -104,5 +105,31 @@ public class BeerServiceImpl implements BeerService{
     public Boolean deleteById(UUID beerId) {
         beerMap.remove(beerId);
         return true;
+    }
+
+    @Override
+    public Optional<BeerDTO> patchBeerById(UUID beerId, BeerDTO beer) {
+        BeerDTO existing = beerMap.get(beerId);
+
+        if(StringUtils.hasText(beer.getBeerName())){
+            existing.setBeerName(beer.getBeerName());
+        }
+
+        if(beer.getBeerStyle() != null) {
+            existing.setBeerStyle(beer.getBeerStyle());
+        }
+
+        if(beer.getPrice() != null) {
+            existing.setPrice(beer.getPrice());
+        }
+
+        if(beer.getQuantityOnHand() != null) {
+            existing.setQuantityOnHand(beer.getQuantityOnHand());
+        }
+
+        if(StringUtils.hasText(beer.getUpc())) {
+            existing.setUpc(beer.getUpc());
+        }
+        return Optional.of(existing);
     }
 }
