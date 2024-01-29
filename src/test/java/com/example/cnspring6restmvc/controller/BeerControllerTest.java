@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,6 +49,9 @@ class BeerControllerTest {
 
     @Captor
     ArgumentCaptor<UUID> uuidArgCaptor;
+
+    @Captor
+    ArgumentCaptor<BeerDTO> beerDTOArgumentCaptor;
 
     @BeforeEach
     void setUp() {
@@ -161,5 +166,23 @@ class BeerControllerTest {
         verify(beerService).deleteById(uuidArgCaptor.capture());
 
         assertThat(testBeer.getId()).isEqualTo(uuidArgCaptor.getValue());
+    }
+
+    @Test
+    void patchBeer() throws Exception {
+        BeerDTO beer = beerServiceImpl.listBeers().get(0);
+        Map<String, Object> beerMap = new HashMap<>();
+        beerMap.put("beerName", "New Name");
+
+        mockMvc.perform(patch(BEER_PATH_ID,beer.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(beerMap)))
+                .andExpect(status().isNoContent());
+
+        verify(beerService).patchBeerById(uuidArgCaptor.capture(), beerDTOArgumentCaptor.capture());
+
+        assertThat(beer.getId()).isEqualTo(uuidArgCaptor.getValue());
+        assertThat(beerMap.get("beerName")).isEqualTo(beerDTOArgumentCaptor.getValue().getBeerName());
     }
 }
