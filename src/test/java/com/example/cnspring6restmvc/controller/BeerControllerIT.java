@@ -158,5 +158,4 @@ class BeerControllerIT {
                 .content(objectMapper.writeValueAsString(beerMap)))
                 .andExpect(status().isBadRequest());
     }
-
 }
