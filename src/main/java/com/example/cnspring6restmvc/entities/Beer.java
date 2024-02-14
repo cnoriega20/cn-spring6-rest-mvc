@@ -41,6 +41,8 @@ public class Beer {
     private String beerName;
 
     @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "beer_style", columnDefinition = "smallint")
     private BeerStyle beerStyle;
 
     @NotNull
