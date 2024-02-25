@@ -7,6 +7,7 @@ import com.example.cnspring6restmvc.model.BeerStyle;
 import com.example.cnspring6restmvc.repositories.BeerRepository;
 import com.example.cnspring6restmvc.repositories.CustomerRepository;
 import com.example.cnspring6restmvc.services.BeerCsvService;
+import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,7 @@ public class Bootstrap implements CommandLineRunner {
 
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         loadBeerData();
         loadCsvData();
