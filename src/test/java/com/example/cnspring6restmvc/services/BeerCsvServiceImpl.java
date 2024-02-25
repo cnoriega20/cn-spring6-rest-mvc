@@ -17,11 +17,11 @@ public class BeerCsvServiceImpl implements BeerCsvService {
             List<BeerCSVRecord> beerCSVRecords = new CsvToBeanBuilder<BeerCSVRecord>(new FileReader(csvFile))
                     .withType(BeerCSVRecord.class)
                     .build().parse();
-
+            return beerCSVRecords;
         } catch(FileNotFoundException e){
             throw new RuntimeException(e);
         }
 
-        return null;
+
     }
 }
