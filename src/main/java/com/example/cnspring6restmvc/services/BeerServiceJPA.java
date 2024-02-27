@@ -1,5 +1,6 @@
 package com.example.cnspring6restmvc.services;
 
+import com.example.cnspring6restmvc.entities.Beer;
 import com.example.cnspring6restmvc.mappers.BeerMapper;
 import com.example.cnspring6restmvc.model.BeerDTO;
 import com.example.cnspring6restmvc.repositories.BeerRepository;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,10 +31,20 @@ public class BeerServiceJPA implements BeerService{
 
     @Override
     public List<BeerDTO> listBeers(String beerName) {
+        List<Beer> beerList;
+        if(StringUtils.hasText(beerName)){
+            beerList = listBeersByName(beerName);
+        } else {
+            beerList = beerRepository.findAll();
+        }
         return  beerRepository.findAll()
                 .stream()
                 .map(beerMapper::beerToBeerDto)
                 .toList();
+    }
+
+    private List<Beer> listBeersByName(String beerName) {
+        return new ArrayList<>();
     }
 
     @Override
