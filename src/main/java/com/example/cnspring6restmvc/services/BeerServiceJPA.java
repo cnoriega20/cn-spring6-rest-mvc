@@ -37,14 +37,13 @@ public class BeerServiceJPA implements BeerService{
         } else {
             beerList = beerRepository.findAll();
         }
-        return  beerRepository.findAll()
-                .stream()
+        return  beerList.stream()
                 .map(beerMapper::beerToBeerDto)
                 .toList();
     }
 
-    private List<Beer> listBeersByName(String beerName) {
-        return new ArrayList<>();
+    public List<Beer> listBeersByName(String beerName) {
+        return beerRepository.findAllByBeerNameIsLikeIgnoreCase("%" + beerName + "%");
     }
 
     @Override
