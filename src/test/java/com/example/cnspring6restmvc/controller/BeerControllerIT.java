@@ -4,6 +4,7 @@ import com.example.cnspring6restmvc.entities.Beer;
 import com.example.cnspring6restmvc.exception.NotFoundException;
 import com.example.cnspring6restmvc.mappers.BeerMapper;
 import com.example.cnspring6restmvc.model.BeerDTO;
+import com.example.cnspring6restmvc.model.BeerStyle;
 import com.example.cnspring6restmvc.repositories.BeerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -57,6 +58,14 @@ class BeerControllerIT {
     }
 
     @Test
+    void testListBeersByStyle() throws  Exception {
+        mockMvc.perform(get(BeerController.BEER_PATH)
+                        .queryParam("beerStyle", BeerStyle.IPA.PILSNER.name()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(336)));
+    }
+
+    @Test
     void testListBeersByName() throws  Exception {
         mockMvc.perform(get(BeerController.BEER_PATH)
                 .queryParam("beerName", "IPA"))
@@ -79,7 +88,7 @@ class BeerControllerIT {
     }
     @Test
     void testListBeer() {
-        List<BeerDTO> dtos = beerController.listBeers(null);
+        List<BeerDTO> dtos = beerController.listBeers(null, null);
         assertThat(dtos.size()).isEqualTo(2413);
     }
 
@@ -88,7 +97,7 @@ class BeerControllerIT {
     @Test
     void testEmptyList(){
         beerRepository.deleteAll();
-        List<BeerDTO> dtos = beerController.listBeers(null);
+        List<BeerDTO> dtos = beerController.listBeers(null, null);
         assertThat(dtos.size()).isEqualTo(0);
 
     }
