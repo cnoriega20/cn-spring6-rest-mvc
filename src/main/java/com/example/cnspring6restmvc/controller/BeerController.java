@@ -2,6 +2,7 @@ package com.example.cnspring6restmvc.controller;
 
 import com.example.cnspring6restmvc.exception.NotFoundException;
 import com.example.cnspring6restmvc.model.BeerDTO;
+import com.example.cnspring6restmvc.model.BeerStyle;
 import com.example.cnspring6restmvc.services.BeerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class BeerController {
 
     @GetMapping(BEER_PATH)
     public List<BeerDTO> listBeers(@RequestParam(required = false) String beerName,
-                                   @RequestParam(required = false) String beerStyle){
+                                   @RequestParam(required = false) BeerStyle beerStyle){
         return beerService.listBeers(beerName, beerStyle);
     }
     @GetMapping(BEER_PATH_ID)

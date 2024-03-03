@@ -3,6 +3,7 @@ package com.example.cnspring6restmvc.services;
 import com.example.cnspring6restmvc.entities.Beer;
 import com.example.cnspring6restmvc.mappers.BeerMapper;
 import com.example.cnspring6restmvc.model.BeerDTO;
+import com.example.cnspring6restmvc.model.BeerStyle;
 import com.example.cnspring6restmvc.repositories.BeerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -30,16 +31,23 @@ public class BeerServiceJPA implements BeerService{
     }
 
     @Override
-    public List<BeerDTO> listBeers(String beerName, String beerStyle) {
+    public List<BeerDTO> listBeers(String beerName, BeerStyle beerStyle) {
         List<Beer> beerList;
         if(StringUtils.hasText(beerName) && beerStyle == null){
             beerList = listBeersByName(beerName);
+        }
+        if(!StringUtils.hasText(beerName) && beerStyle != null){
+            beerList = listBeersByStyle(beerStyle);
         } else {
             beerList = beerRepository.findAll();
         }
         return  beerList.stream()
                 .map(beerMapper::beerToBeerDto)
                 .toList();
+    }
+
+    public  List<Beer> listBeersByStyle(BeerStyle beerStyle) {
+        return beerRepository.findAllByBeerStyle(beerStyle);
     }
 
     public List<Beer> listBeersByName(String beerName) {
