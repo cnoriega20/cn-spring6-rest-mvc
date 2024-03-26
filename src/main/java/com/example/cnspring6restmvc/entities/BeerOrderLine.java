@@ -47,7 +47,10 @@ public class BeerOrderLine {
 
     @ManyToOne
     private Beer beer;
+
     private Integer orderQuantity = 0;
+
+    @Column(name = "quantity_allocated")
     private Integer quantifyAllocated;
 
 }
