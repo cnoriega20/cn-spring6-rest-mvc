@@ -34,8 +34,8 @@ public class BeerOrder {
     private Long version;
 
     @CreationTimestamp
-    @Column (updatable = false)
-    private Timestamp createData;
+    @Column (name = "created_date", updatable = false)
+    private Timestamp createDate;
 
     @UpdateTimestamp
     private Timestamp  lastModifiedDate;

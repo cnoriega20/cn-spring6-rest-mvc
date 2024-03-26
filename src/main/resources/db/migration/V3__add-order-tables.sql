@@ -11,7 +11,7 @@ CREATE TABLE beer_order (
                             version             BIGINT          DEFAULT NULL,
                             customer_id         VARCHAR(36)     DEFAULT NULL,
                             PRIMARY KEY (id),
-                            CONSTRAINT FK_beer_order_customer FOREIGN KEY (customer_id) REFERENCES customer(id)
+                            CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer(id)
 ) ENGINE=InnoDB;
 
 -- Create beer_order_line table
@@ -27,6 +27,6 @@ CREATE TABLE beer_order_line (
                                  customer_id         VARCHAR(36)     DEFAULT NULL,
                                  beer_order_id       VARCHAR(36)     DEFAULT NULL,
                                  PRIMARY KEY (id),
-                                 CONSTRAINT FK_beer_order_line_beer_order FOREIGN KEY (beer_order_id) REFERENCES beer_order(id),
-                                 CONSTRAINT FK_beer_order_line_beer FOREIGN KEY (beer_id) REFERENCES beer(id)
+                                 CONSTRAINT FOREIGN KEY (beer_order_id) REFERENCES beer_order(id),
+                                 CONSTRAINT FOREIGN KEY (beer_id) REFERENCES beer(id)
 ) ENGINE=InnoDB;
