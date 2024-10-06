@@ -26,7 +26,7 @@ public class BeerOrder {
         this.createDate = createDate;
         this.lastModifiedDate = lastModifiedDate;
         this.customerRef = customerRef;
-        this.customer = customer;
+        this.setCustomer(customer);
         this.beerOrderLines = beerOrderLines;
     }
 
