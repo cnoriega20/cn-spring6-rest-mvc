@@ -41,7 +41,7 @@ class BeerOrderRepositoryTest {
                 .customerRef("Test customer ref")
                 .customer(testCustomer)
                 .build();
-        BeerOrder savedBeerOrder = beerOrderRepository.saveAndFlush(beerOrder); //To flush the reference and work the bi directional relationship
+        BeerOrder savedBeerOrder = beerOrderRepository.save(beerOrder);
         log.info(savedBeerOrder.getCustomerRef());
     }
 }
