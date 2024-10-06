@@ -1,7 +1,9 @@
 package com.example.cnspring6restmvc.repositories;
 
 import com.example.cnspring6restmvc.entities.Beer;
+import com.example.cnspring6restmvc.entities.BeerOrder;
 import com.example.cnspring6restmvc.entities.Customer;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,12 +34,14 @@ class BeerOrderRepositoryTest {
         testBeer = beerRepository.findAll().get(0);
     }
 
+    @Transactional
     @Test
     void testBeerOrders(){
-        log.info(String.valueOf(beerOrderRepository.count()));
-        log.info(String.valueOf(beerRepository.count()));
-        log.info(String.valueOf(customerRepository.count()));
-        log.info(testCustomer.getCustomerName());
-        log.info(testBeer.getBeerName());
+        BeerOrder beerOrder = BeerOrder.builder()
+                .customerRef("Test customer ref")
+                .customer(testCustomer)
+                .build();
+        BeerOrder savedBeerOrder = beerOrderRepository.saveAndFlush(beerOrder); //To flush the reference and work the bi directional relationship
+        log.info(savedBeerOrder.getCustomerRef());
     }
 }
