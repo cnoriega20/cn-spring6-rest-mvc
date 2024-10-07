@@ -58,6 +58,7 @@ public class Beer {
     @ToString.Exclude
     private Set<BeerOrderLine> beerOrderLines;
 
+    @Builder.Default
     @ManyToMany
     @JoinTable(name = "beer_category",
             joinColumns =
