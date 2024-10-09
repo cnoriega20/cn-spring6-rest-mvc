@@ -2,6 +2,7 @@ package com.example.cnspring6restmvc.repositories;
 
 import com.example.cnspring6restmvc.entities.Beer;
 import com.example.cnspring6restmvc.entities.Category;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ class CategoryRepositoryTest {
     }
 
     @Test
+    @Transactional
     void testAddCategory() {
         Category savedCategory = categoryRepository.save(Category.builder()
                         .description("lagers")
