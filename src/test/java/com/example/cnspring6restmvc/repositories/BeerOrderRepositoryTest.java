@@ -2,6 +2,7 @@ package com.example.cnspring6restmvc.repositories;
 
 import com.example.cnspring6restmvc.entities.Beer;
 import com.example.cnspring6restmvc.entities.BeerOrder;
+import com.example.cnspring6restmvc.entities.BeerOrderShipment;
 import com.example.cnspring6restmvc.entities.Customer;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,9 @@ class BeerOrderRepositoryTest {
         BeerOrder beerOrder = BeerOrder.builder()
                 .customerRef("Test customer ref")
                 .customer(testCustomer)
+                .beerOrderShipment(BeerOrderShipment.builder()
+                        .trackingNumber("123456")
+                        .build())
                 .build();
         BeerOrder savedBeerOrder = beerOrderRepository.save(beerOrder);
         log.info(savedBeerOrder.getCustomerRef());
